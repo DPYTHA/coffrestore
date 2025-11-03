@@ -107,9 +107,7 @@ def format_form_data(form_data, files_info):
 """
     return message
 
-@app.route('/')
-def index():
-    return render_template('formulaire.html')
+
 
 @app.route('/submit', methods=['POST'])
 def submit_form():
