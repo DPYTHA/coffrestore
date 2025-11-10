@@ -8,6 +8,34 @@
   ],
   "routes": [
     {
+      "src": "/admission",
+      "dest": "/admission.html"
+    },
+    {
+      "src": "/formations",
+      "dest": "/formations.html"
+    },
+    {
+      "src": "/formulaire",
+      "dest": "/formulaire.html"
+    },
+    {
+      "src": "/services",
+      "dest": "/services.html"
+    },
+    {
+      "src": "/about",
+      "dest": "/about.html"
+    },
+     {
+      "src": "/page_confirmation",
+      "dest": "/page_confirmation.html"
+    },
+    {
+      "src": "/(.*\\.html)",
+      "dest": "/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
