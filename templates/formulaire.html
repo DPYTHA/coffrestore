@@ -1,147 +1,394 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulaire de candidature</title>
-  <style>
-    /* --- Global --- */
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0a1a33; /* Bleu nuit */
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renseignement du Candidat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    section {
-      width: 100%;
-      max-width: 700px;
-      background: #fff;
-      color: #000;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
 
-    .section-title {
-      text-align: center;
-      color: #0a1a33; /* Bleu nuit */
-      margin-bottom: 20px;
-    }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
 
-    h2 {
-      color: #0077cc; /* Bleu ciel */
-      margin-top: 20px;
-    }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+        }
 
-    /* --- Formulaire --- */
-    form label {
-      display: block;
-      font-weight: bold;
-      margin-top: 12px;
-      color: #0a1a33; /* Texte bleu nuit */
-    }
+        header h1 {
+            color: #007bff;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
 
-    form input, form select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
+        header p {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
 
-    form input:focus, form select:focus {
-      outline: none;
-      border: 1px solid #0077cc;
-      box-shadow: 0 0 5px rgba(0,119,204,0.5);
-    }
+        .whatsapp {
+            background: #25D366;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: bold;
+        }
 
-    /* --- Bouton --- */
-    .btn-submit {
-      display: block;
-      width: 100%;
-      margin-top: 25px;
-      padding: 12px;
-      background: #0077cc; /* Bleu ciel */
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
 
-    .btn-submit:hover {
-      background: #005fa3; /* Bleu ciel foncé */
-    }
-  </style>
+        .form-section h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .submit-btn {
+            background: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .loading-spinner {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <section id="formulaire">
-    <h1 class="section-title">📝 Renseignement du candidat</h1>
-    <form action="http://127.0.0.1:5000/submit_form" method="POST">
-      <h2>Informations personnelles</h2>
-      
-      <label>Nom :</label>
-      <input type="text" name="nom" required>
+    <div class="container">
+        <header>
+            <h1>« Voyageons pour les études et le travail »</h1>
+            <p>RENSEIGNEMENT DU CANDIDAT</p>
+            <div class="whatsapp">
+                <i>📱</i> WhatsApp +7 987 904 0719
+            </div>
+        </header>
+        
+        <div class="form-container">
+            <form id="candidateForm">
+                <!-- Informations personnelles -->
+                <div class="form-section">
+                    <h2>Informations Personnelles</h2>
+                    
+                    <div class="form-group">
+                        <label for="nom" class="required">Nom</label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="prenom" class="required">Prénom</label>
+                        <input type="text" id="prenom" name="prenom" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telephone" class="required">Numéro de téléphone</label>
+                        <input type="tel" id="telephone" name="telephone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="required">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pays" class="required">Pays</label>
+                        <input type="text" id="pays" name="pays" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ville" class="required">Ville</label>
+                        <input type="text" id="ville" name="ville" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quartier" class="required">Quartier</label>
+                        <input type="text" id="quartier" name="quartier" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nomPere" class="required">Nom, prénom du père</label>
+                        <input type="text" id="nomPere" name="nomPere" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nomMere" class="required">Nom, prénom de la mère</label>
+                        <input type="text" id="nomMere" name="nomMere" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Statut</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="marie" name="statut" value="Marie(e)" required>
+                                <label for="marie">Marié(e)</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="celibataire" name="statut" value="Celibataire" required>
+                                <label for="celibataire">Célibataire</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Personne à contacter en cas d'urgence -->
+                <div class="form-section">
+                    <h2>Personne à contacter en cas d'urgence</h2>
+                    
+                    <div class="form-group">
+                        <label for="urgenceNom" class="required">Nom</label>
+                        <input type="text" id="urgenceNom" name="urgenceNom" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgencePrenom" class="required">Prénom</label>
+                        <input type="text" id="urgencePrenom" name="urgencePrenom" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgenceTelephone" class="required">Numéro de téléphone</label>
+                        <input type="tel" id="urgenceTelephone" name="urgenceTelephone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgenceEmail" class="required">Email</label>
+                        <input type="email" id="urgenceEmail" name="urgenceEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgenceLien" class="required">Lien avec la personne</label>
+                        <input type="text" id="urgenceLien" name="urgenceLien" placeholder="ex: Parent, Frère/Soeur, etc." required>
+                    </div>
+                </div>
+                
+                <!-- Informations académiques -->
+                <div class="form-section">
+                    <h2>Informations Académiques</h2>
+                    
+                    <div class="form-group">
+                        <label for="etablissementBac" class="required">Nom de votre établissement au Bac</label>
+                        <input type="text" id="etablissementBac" name="etablissementBac" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diplomes" class="required">Diplômes</label>
+                        <textarea id="diplomes" name="diplomes" rows="4" placeholder="Listez vos diplômes (un par ligne)" required></textarea>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="btn-text">Soumettre le formulaire</span>
+                    <span class="loading-spinner" style="display: none;">Envoi en cours...</span>
+                </button>
+                
+                <div id="successMessage" class="success-message" style="display: none;">
+                    Formulaire soumis avec succès ! Vos informations ont été envoyées.
+                    Veuillez nous envoyer les documents ennumerés par Whatssap au +7 9879040719.
+                </div>
+                
+                <div id="errorMessage" class="error-message" style="display: none;">
+                    Erreur lors de l'envoi. Veuillez réessayer.
+                </div>
+            </form>
+        </div>
+    </div>
 
-      <label>Prénom :</label>
-      <input type="text" name="prenom" required>
+    <script>
+        document.getElementById('candidateForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loadingSpinner = submitBtn.querySelector('.loading-spinner');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Masquer les messages précédents
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Afficher le spinner de chargement
+            btnText.style.display = 'none';
+            loadingSpinner.style.display = 'inline';
+            submitBtn.disabled = true;
+            
+            try {
+                // Récupérer les données du formulaire
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+                
+                // Formater le message pour Telegram
+                const message = `
+📋 **NOUVEAU CANDIDAT**
 
-      <label>Numéro de téléphone :</label>
-      <input type="text" name="telephone" required>
+👤 **INFORMATIONS PERSONNELLES**
+• Nom: ${data.nom}
+• Prénom: ${data.prenom}
+• Téléphone: ${data.telephone}
+• Email: ${data.email}
+• Pays: ${data.pays}
+• Ville: ${data.ville}
+• Quartier: ${data.quartier}
+• Père: ${data.nomPere}
+• Mère: ${data.nomMere}
+• Statut: ${data.statut}
 
-      <label>Email :</label>
-      <input type="email" name="email" required>
+🚨 **CONTACT D'URGENCE**
+• Nom: ${data.urgenceNom}
+• Prénom: ${data.urgencePrenom}
+• Téléphone: ${data.urgenceTelephone}
+• Email: ${data.urgenceEmail}
+• Lien: ${data.urgenceLien}
 
-      <label>Pays :</label>
-      <input type="text" name="pays" required>
+🎓 **INFORMATIONS ACADÉMIQUES**
+• Établissement Bac: ${data.etablissementBac}
+• Diplômes: ${data.diplomes}
+                `;
 
-      <label>Ville :</label>
-      <input type="text" name="ville" required>
-
-      <label>Quartier :</label>
-      <input type="text" name="quartier">
-
-      <label>Nom, prénom du père :</label>
-      <input type="text" name="pere">
-
-      <label>Nom, prénom de la mère :</label>
-      <input type="text" name="mere">
-
-      <label>Statut :</label>
-      <select name="statut" required>
-        <option value="marie">Marié(e)</option>
-        <option value="celibataire">Célibataire</option>
-      </select>
-
-      <h2>👤 Personne à contacter en cas d’urgence</h2>
-      <label>Nom :</label>
-      <input type="text" name="urgence_nom" required>
-
-      <label>Prénom :</label>
-      <input type="text" name="urgence_prenom" required>
-
-      <label>Numéro de téléphone :</label>
-      <input type="text" name="urgence_telephone" required>
-
-      <label>Email :</label>
-      <input type="email" name="urgence_email">
-
-      <label>Pays :</label>
-      <input type="text" name="urgence_pays">
-
-      <label>Ville :</label>
-      <input type="text" name="urgence_ville">
-
-      <button type="submit" class="btn-submit">📨 Envoyer ma candidature</button>
-    </form>
-  </section>
+                // REMPLACEZ CES VARIABLES PAR LES VÔTRES
+                const botToken = 'VOTRE_BOT_TOKEN_TELEGRAM';
+                const chatId = 'VOTRE_CHAT_ID';
+                
+                // Envoyer le message à Telegram
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    successMessage.textContent = 'Formulaire soumis avec succès ! Vos informations ont été envoyées.';
+                    successMessage.style.display = 'block';
+                    document.getElementById('candidateForm').reset();
+                } else {
+                    throw new Error('Erreur Telegram API');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                errorMessage.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+                errorMessage.style.display = 'block';
+            } finally {
+                // Restaurer le bouton
+                btnText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+                submitBtn.disabled = false;
+                
+                // Faire défiler jusqu'au message
+                if (successMessage.style.display === 'block') {
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                } else if (errorMessage.style.display === 'block') {
+                    errorMessage.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
 </body>
 </html>
