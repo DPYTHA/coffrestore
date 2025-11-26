@@ -358,20 +358,24 @@ header {
   </div>
 
   <script>
-    // JavaScript corrigé - intégré directement
+    // JavaScript corrigé pour Railways
     document.addEventListener('DOMContentLoaded', function() {
         const splash = document.getElementById('splash');
         const splashText = document.getElementById('splash-text');
         const home = document.getElementById('home');
         
-        // Vérifier si on est sur la page d'accueil
-        const currentPage = window.location.pathname.split('/').pop();
-        const isHomePage = currentPage === '' || 
-                          currentPage === 'index.html' || 
-                          currentPage === '/' ||
-                          !currentPage.includes('.html');
+        // Vérification améliorée pour toutes les pages
+        const currentPath = window.location.pathname;
+        const isHomePage = 
+            currentPath === '/' || 
+            currentPath === '' || 
+            currentPath === '/index.html' ||
+            currentPath.endsWith('index.html') ||
+            currentPath === '/home' ||
+            // Ajout pour les routes SPA sur Railways
+            !currentPath.includes('.html') && currentPath.split('/').filter(Boolean).length === 0;
         
-        console.log('Page actuelle:', currentPage, 'Homepage?:', isHomePage);
+        console.log('Page actuelle:', currentPath, 'Homepage?:', isHomePage);
         
         if (isHomePage && splash && splashText && home) {
             // Animation seulement sur l'accueil
@@ -432,6 +436,16 @@ header {
             });
         }
     });
+
+    // Solution de secours - cacher le splash après un délai maximum
+    setTimeout(function() {
+        const splash = document.getElementById('splash');
+        const home = document.getElementById('home');
+        if (splash && home) {
+            splash.style.display = 'none';
+            home.classList.remove('hidden');
+        }
+    }, 5000); // 5 secondes maximum
   </script>
 </body>
 </html>
