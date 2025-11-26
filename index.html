@@ -405,13 +405,14 @@
     const splashText = document.getElementById('splash-text');
     const home = document.getElementById('home');
     
-    // Vérifier si on est sur la page d'accueil
+    // ✅ VÉRIFIER SI ON EST SUR LA PAGE D'ACCUEIL
     const isHomePage = window.location.pathname === '/' || 
                       window.location.pathname === '/index.html' || 
-                      window.location.pathname === '';
+                      window.location.pathname === '' ||
+                      window.location.pathname.endsWith('index.html');
     
-    if (isHomePage) {
-        // Typing animation seulement sur la homepage
+    if (isHomePage && splash && splashText && home) {
+        // Typing animation SEULEMENT sur la homepage
         const text = "PythAcademy";
         let i = 0;
         
@@ -422,30 +423,24 @@
                 setTimeout(typeWriter, 150);
             } else {
                 setTimeout(() => {
-                    if (splash) splash.classList.add('hidden');
-                    if (home) home.classList.remove('hidden');
+                    splash.classList.add('hidden');
+                    home.classList.remove('hidden');
                     document.body.style.overflow = 'auto';
                 }, 1000);
             }
         }
         
         setTimeout(typeWriter, 500);
+        createParticles(); // Particules seulement sur l'accueil
     } else {
-        // Sur les autres pages, cacher immédiatement le splash
+        // ✅ SUR LES AUTRES PAGES : CACHER IMMÉDIATEMENT LE SPLASH
         if (splash) {
             splash.style.display = 'none';
         }
-        if (home) {
-            home.classList.remove('hidden');
-        }
+        // Ne pas toucher à 'home' sur les autres pages
     }
     
-    // Création des particules (optionnel)
-    if (isHomePage) {
-        createParticles();
-    }
-    
-    // Effet de scroll sur le header
+    // Effet de scroll sur le header (commun à toutes les pages)
     window.addEventListener('scroll', function() {
         const header = document.querySelector('header');
         if (header && window.scrollY > 100) {
