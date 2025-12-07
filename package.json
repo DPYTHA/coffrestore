@@ -1,9 +1,23 @@
 {
-  "name": "static-site",
+  "name": "pythacademy",
+  "version": "1.0.0",
+  "description": "Site PythAcademy - Admissions et Formations",
+  "main": "server.js",
   "scripts": {
-    "start": "serve -s . -l $PORT"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
-    "serve": "^14.0.0"
-  }
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
